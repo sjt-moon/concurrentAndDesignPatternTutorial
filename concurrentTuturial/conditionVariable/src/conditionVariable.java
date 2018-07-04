@@ -5,6 +5,23 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/* Customer & Producer scenario. Customer always buys from the shared queue whereas
+ * producer always put new things into that queue. A naive solution is spin-waiting
+ * where CPU resources are wasted. A condition variable typically conducts the
+ * following behaviours,
+ * 1. acquire a lock
+ * 2. if (assertion holds) conduct behavior
+ * 3. otherwise, wait. In detail, release the lock and sleep the current thread,
+ * when resumed via signal or notify functions called from other threads, re-acquire
+ * the lock and check the assertion again.
+ * ---
+ * lock.acquire
+ * while (!assertion) {
+ *     lock.release
+ *     thread.sleep
+ *     when resumed, lock.acquire
+ * }
+ * */
 
 public class conditionVariable {
     static class Product {
@@ -105,5 +122,13 @@ public class conditionVariable {
 
         customerThread.start();
         producerThread.start();
+
+        try {
+            customerThread.join();
+            producerThread.join();
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
