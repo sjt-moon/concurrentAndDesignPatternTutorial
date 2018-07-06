@@ -11,7 +11,11 @@ public class VisitorPattern {
      * Q3 Essential
      * >>> using function overloading to conduct different behaviours
      *
-     * Q4 Attention
+     * Q4 Functions
+     * >>> accept() defines traversal pattern, i.e. how to traverse all elements
+     * >>> visit() defines how to visit a particular node
+     *
+     * Q5 Attention
      * >>> accept & visit should better use "final" parameters, as they only traverse the structure
      * >>> rather than changing them
      * */
@@ -34,24 +38,30 @@ interface Movie {
 
 class ScienceFictionMovie implements Movie {
     String director;
+    Movie[] movies;
+
     public ScienceFictionMovie(String director) {
         this.director = director;
     }
 
     @Override
     public void accept(final Visitor visitor) {
+        if (movies != null) for (Movie movie: movies) movie.accept(visitor);
         visitor.visit(this);
     }
 }
 
 class ComedyMovie implements Movie {
     String star;
+    Movie[] movies;
+
     public ComedyMovie(String star) {
         this.star = star;
     }
 
     @Override
     public void accept(final Visitor visitor) {
+        if (movies != null) for (Movie movie: movies) movie.accept(visitor);
         visitor.visit(this);
     }
 }
@@ -65,10 +75,12 @@ interface Visitor {
 // different behaviours implemented via different subclass of visitor
 class PrintMovieVisitor implements Visitor {
     public void visit(final ScienceFictionMovie scienceFictionMovie) {
+        if (scienceFictionMovie == null) return;
         System.out.println("Director: " + scienceFictionMovie.director);
     }
 
     public void visit(final ComedyMovie comedyMovie) {
+        if (comedyMovie == null) return;
         System.out.println("Star: " + comedyMovie.star);
     }
 }
