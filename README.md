@@ -24,8 +24,14 @@ signal() {
 
 ### merge sort
 becomes faster given more than 3 million elements to be sorted 
+
 ### quick sort
 same as above 
+
+### readers and writers problem
+The original problem is illustrated here [wiki](https://en.wikipedia.org/wiki/Readers%E2%80%93writers_problem). Multiple readers try to read the shared content while a writer might update the content. When updaing, no reader could access the resource. However, multiple readers could read in parallel. (What is true parallel? No locks and multiple cores could assign multiple tasks in each CPU at the same time).
+
+Two locks are not sufficient. You need a waiting queue. (A semaphore with single resource could be sufficient)
 
 ## design patterns
 ### visitor pattern
