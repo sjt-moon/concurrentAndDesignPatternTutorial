@@ -55,7 +55,8 @@ public class conditionVariable {
             try {
                 while (queue.size() >= maxSize) {
                     /*
-                    * await: atomatically release lock & wait */
+                    * await: atomatically release lock & wait 
+                    * if signalled to wake up, Program Counter would point to here to re-start this process*/
                     isQueueNotFull.await();
                 }
                 queue.offer(product);
