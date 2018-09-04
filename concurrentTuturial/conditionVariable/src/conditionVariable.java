@@ -54,6 +54,8 @@ public class conditionVariable {
             mutex.lock();
             try {
                 while (queue.size() >= maxSize) {
+                    /*
+                    * await: atomatically release lock & wait */
                     isQueueNotFull.await();
                 }
                 queue.offer(product);
